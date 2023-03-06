@@ -12,7 +12,6 @@ app.set('view engine', 'ejs');
 //静的ファイルを宣言
 app.use(express.static('public'));
 
-
 //ルーティング-------------------------
 
 //index

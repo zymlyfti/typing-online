@@ -1,0 +1,14 @@
+body {
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+#main {
+    padding:20px;
+}
+
+@media screen and (max-width: 500px) {
+    #main {
+        width:80%;
+    }
+}

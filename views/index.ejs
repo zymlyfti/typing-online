@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+        <%- include('./layouts/header.ejs',{title_content:'Index'}); %>
+        <link rel="stylesheet" type="text/css" href="/css/index.css?ver=<%= new Date().getTime().toString() %>">
+</head>
+<body>
+
+<div id="main">
+    <h2>Index</h2>
+    <p>This is a test t</p>
+    <p>test t2</p>
+</div> <!-- main -->
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+</body>
+</html>

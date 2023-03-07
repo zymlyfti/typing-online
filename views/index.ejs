@@ -7,12 +7,19 @@
 <body>
 
 <div id="main">
-    <h2>Index</h2>
-    <p>This is a test t</p>
-    <p>backed zymlyfti</p>
+    <div id="game">
+        <div id="question-field"></div>
+
+        <button id="d-btn" class="btn btn-primary" style="position:fixed;bottom:20px;right:20px;">D</button>
+    </div>
+
 </div> <!-- main -->
 
+<audio id="btnsound" preload="auto">
+    <source src="/os1.wav" type="audio/wav">
+</audio>
+
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/index.js" type="module"></script>
 </body>
 </html>

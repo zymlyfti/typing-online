@@ -21,6 +21,9 @@ const seMiss = new Audio('/miss.wav');
 const seKeydown = new Audio('/keydown.wav');
 const $body = $('body');
 const $questionField = $('#question-field');
+const $questionKanji = $('#question-kanji');
+const $questionText = $('#question-text');
+const $questionRoma = $('#question-roma');
 
 let questionTextKanji = 'もし採用をだしたら入社していただけますか';
 let questionText = 'もしさいようをだしたらにゅうしゃしていただけますか';
@@ -30,14 +33,18 @@ let missCount = 0;
 let startTime,endTime;
 
 
-//1つの設問に対応するように1つのインスタンスを事前に生成しておく
+//1つの設問に対応するように1つのparserインスタンスを事前に生成しておく
 //押されたキーをparser.inputで送ると、そのキーが正しいか自動で判定され、
 //今までに入力した文字列(1)と、まだ打ち残っている文字列(2)を返す。
 //そして次の文字をinputで再び受け付ける。
 //正しい入力のキーをinputに渡した場合、(1)(2)が更新される。
 //そして(2)がだんだん減っていき、空になったらisComplete()がtrueとなる。
+
+$questionKanji.html(questionTextKanji);
+$questionText.html(questionText);
+
 const parser = new HiraganaParser({hiraganas: questionText});
-$questionField.html( makeOutput(parser) );
+$questionRoma.html( makeOutput(parser) );
 
 $body.on('keydown',function(e) {
     typed(e.key);
@@ -54,7 +61,7 @@ function typed(key) {
 
     if (!parser.isComplete()) {
         //設問を打ち終わっていない場合 
-        $questionField.html( makeOutput(parser) );
+        $questionRoma.html( makeOutput(parser) );
     } else {
         //設問を打ち終わっている場合
         $questionField.html('<h2>FIN</h2>');
@@ -63,13 +70,9 @@ function typed(key) {
 
 function makeOutput(parser) {
     let output = '';
-    output += '<div id="question-kanji">' + questionTextKanji + '</div>';
-    output += '<div id="question-hiragana">' + questionText + '</div>';
 
-    output += '<div id="question-roma">';
     output += '<div class="inputed">' + parser.inputedRoma + '</div>';
     output += '<div class="not-inputed"><div class="nowmiss">' + parser.notInputedRoma[0] + '</div>' + parser.notInputedRoma.slice(1,parser.notInputedRoma.length); + '</div>';
-    output += '</div>';
     
     //今までに打ったroma字が前回のmakeOutputから1文字も進んでいない場合を、ミスとして判定する
     if (checkMiss == parser.inputedRoma) {

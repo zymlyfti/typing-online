@@ -46,10 +46,10 @@ $questionText.html(questionText);
 const parser = new HiraganaParser({hiraganas: questionText});
 $questionRoma.html( makeOutput(parser) );
 
+//キー入力イベント
 $body.on('keydown',function(e) {
     typed(e.key);
 });
-
 
 //user-defined functions
 function typed(key) {

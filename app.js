@@ -4,7 +4,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mysql = require('mysql2/promise');
 
-const port = 3000
+const port = 3000;
 
 //template engine
 app.set('view engine', 'ejs');
@@ -16,6 +16,7 @@ app.use(express.static('public'));
 
 //index
 app.get('/',(req,res)=>{
+    //全部127.0.0.1になる、想定外
     const ipaddr = req.connection.remoteAddress;
 
     const txt = 'test';

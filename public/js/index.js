@@ -1,4 +1,5 @@
-import { HiraganaParser } from './hiragana-parser/lib/esm/index.mjs';
+import { HiraganaParser } from './user_modules/hiragana-parser/lib/esm/index.mjs';
+import { Say } from './user_modules/sample-module/index.js';
 
 /*
 -------------------------------------
@@ -16,9 +17,8 @@ $(document).ready(function() {
 
 const socket = io();
 
-//const $se = $('#btnsound');
-const seMiss = new Audio('/miss.wav');
-const seKeydown = new Audio('/keydown.wav');
+const seMiss = new Audio('/sound/miss.wav');
+const seKeydown = new Audio('/sound/keydown.wav');
 const $body = $('body');
 const $questionField = $('#question-field');
 const $questionKanji = $('#question-kanji');
@@ -32,6 +32,11 @@ let typeCount = 0;
 let missCount = 0;
 let startTime,endTime;
 
+
+$('#d-btn').on('click',function() {
+	let say1 = new Say();
+	alert(say1.nowdo());
+});
 
 //1つの設問に対応するように1つのparserインスタンスを事前に生成しておく
 //押されたキーをparser.inputで送ると、そのキーが正しいか自動で判定され、

@@ -19,6 +19,17 @@ body {
     height:486px;
 }
 
+#canvas-2d {
+    display:block;
+    margin:40px auto;
+
+    border:2px solid gray;
+    border-radius:10px;
+
+    width:864px;
+    height:486px;
+}
+
 #question-field {
     margin:20px auto;
     margin-top:40px;

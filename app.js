@@ -12,6 +12,89 @@ app.set('view engine', 'ejs');
 //静的ファイルを宣言
 app.use(express.static('public'));
 
+//user -------------------------------
+
+const FIELD_WIDTH = 864, FIELD_HEIGHT = 486;
+
+class Player {
+    constructor(obj={}) {
+        this.id=Math.floor(Math.random()*1000000000);
+        this.width = 80;
+        this.height = 80;
+        this.x = Math.random() * (FIELD_WIDTH - this.width);
+        this.y = Math.random() * (FIELD_HEIGHT - this.height);
+        this.angle = 0;
+        this.movement = {};
+    }
+
+    move(key) {
+        const distance = 28;
+
+        if (key === 'w') {
+            this.y -= distance;
+        }
+        if (key === 's') {
+            this.y += distance;
+        }
+        if (key === 'a') {
+            this.x -= distance;
+        }
+        if (key === 'd') {
+            this.x += distance;
+        }
+    }
+}
+
+let players = {};
+
+io.on('connection',function(socket) {
+    let player = null;
+    
+    socket.on('game-start',function(config) {
+        player = new Player({
+            socketId: socket.id
+        });
+        players[player.id] = player;
+    });
+
+    socket.on('movement',function(movement) {
+        if(!player) {
+            return;
+        }
+        player.movement = movement;
+    });
+
+    socket.on('disconnect',function() {
+        if (!player) {
+            return;
+        }
+        delete players[player.id];
+        player = null;
+    });
+
+});  //io.on
+
+setInterval(function() {
+    Object.values(players).forEach((player) => {
+        const movement = player.movement;
+
+        if (movement.up) {
+            player.move('w');
+        }
+        if (movement.down) {
+            player.move('s');
+        }
+        if (movement.left) {
+            player.move('a');
+        }
+        if (movement.right) {
+            player.move('d');
+        }
+    });
+    io.sockets.emit('state',players);
+},1000/30);
+
+
 //ルーティング-------------------------
 
 //index
@@ -25,12 +108,12 @@ app.get('/',(req,res)=>{
 
 //クライアントでio()の実行、すなわちsocket.ioサーバーに接続された場合に発火
 io.on('connection',(socket)=>{
-    console.log('ユーザーが接続しました');
+    console.log('user connected');
 
 
     //接続が終了されたら
     socket.on('disconnect', function(data) {
-        console.log('ユーザーが退室したした');
+        console.log('user disconnected');
     });
 });
 

@@ -24,8 +24,13 @@ hiragana-parserクラス
 $(document).ready(function() {
 
 const socket = io();
+
 const canvas = $('#canvas-2d')[0];
 const context = canvas.getContext('2d');
+
+const canvas2 = $('#canvas-2d-layer2')[0];
+const context2 = canvas.getContext('2d');
+
 //let playerImage = new Image();
 //playerImage.src = '/error.jpg';
 let movement = {};
@@ -78,7 +83,15 @@ socket.on('state',function(players) {
     });
 });
 
-socket.on('connect',gameStart);
+//M
+//socket.on('connect',gameStart);
+
+
+//canvas layer2 ---------------
+
+// in /js/processingjs/processing.pde
+
+//-------------- canvas layer2
 
 $('#submit-input').on('keypress',function(e) {
     if (e.which == 13) {

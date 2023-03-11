@@ -106,7 +106,9 @@ setInterval(function() {
         }
 
     });
-    io.sockets.emit('state',players);
+    
+    //M
+    //io.sockets.emit('state',players);
 
     //1000[ms] = 1[s]
     //1[s]に33回通信(30FPS)

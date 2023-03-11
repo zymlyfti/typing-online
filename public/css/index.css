@@ -19,15 +19,31 @@ body {
     height:486px;
 }
 
-#canvas-2d {
-    display:block;
-    margin:40px auto;
-
-    border:2px solid gray;
-    border-radius:10px;
-
+#canvas-wrap {
     width:864px;
     height:486px;
+    position:relative;
+    padding:0;
+    margin:40px auto;
+}
+
+#canvas-2d {
+    
+}
+
+#canvas-2d-layer2 {
+    border:2px solid gray;
+    border-radius:10px;
+}
+
+.mycanvas {
+    position:absolute;
+    top:0;
+    left:0;
+    border:0;
+    width:100%;
+    height:100%;
+
 }
 
 #question-field {

@@ -16,6 +16,10 @@ app.use(express.static('public'));
 
 const FIELD_WIDTH = 864, FIELD_HEIGHT = 486;
 
+const colors = [
+    '#ff8e8e','#ff82c6','#c68eff','#9393ff','#93c9ff','#8effff','#8effc6','#c6ff8e','#ffff8e'
+];
+
 class Player {
     constructor(obj={}) {
         this.id=Math.floor(Math.random()*1000000000);
@@ -25,7 +29,8 @@ class Player {
         this.y = Math.random() * (FIELD_HEIGHT - this.height);
         this.angle = 0;
         this.movement = {};
-        this.comment = "";
+        this.comment = "Hello";
+        this.color = colors[ Math.floor(Math.random() * colors.length) ];
     }
 
     move(key) {
@@ -44,6 +49,7 @@ class Player {
             this.x += distance;
         }
     }
+
 }
 
 let players = {};
@@ -102,6 +108,7 @@ setInterval(function() {
         if (movement.right) {
             player.move('d');
         }
+
     });
     io.sockets.emit('state',players);
 

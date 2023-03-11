@@ -26,9 +26,13 @@ $(document).ready(function() {
 const socket = io();
 const canvas = $('#canvas-2d')[0];
 const context = canvas.getContext('2d');
-let playerImage = new Image();
-playerImage.src = '/error.jpg';
+//let playerImage = new Image();
+//playerImage.src = '/error.jpg';
 let movement = {};
+
+const colors = [
+    '#ff8e8e','#ff82c6','#c68eff','#9393ff','#93c9ff','#8effff','#8effc6','#c6ff8e','#ffff8e'
+];
 
 function gameStart() {
     socket.emit('game-start');
@@ -57,8 +61,20 @@ $(document).on('keydown keyup',function(e) {
 socket.on('state',function(players) {
     context.clearRect(0,0,canvas.width,canvas.height);
 
+    let stage = new createjs.Stage('canvas-2d');
+
+    let i=0;
     Object.values(players).forEach(function(player) {
-        context.drawImage(playerImage,player.x,player.y,140,140);
+        if (i > colors.length) i = 0;
+        i++;
+
+        let shape = new createjs.Shape();
+        shape.graphics.beginFill(colors[i]);
+        shape.graphics.drawCircle(0,0,60);
+        shape.x = player.x;
+        shape.y = player.y;
+        stage.addChild(shape);
+        stage.update();
 
         context.lineWidth = 2;
         context.fillStyle = "0ff";

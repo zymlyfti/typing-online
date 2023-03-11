@@ -19,12 +19,18 @@
 
 </div> --> <!-- main -->
 
-<canvas id="canvas-2d" width="1920" height="1080"></canvas>
+<div id="canvas-wrap">
+    <canvas id="canvas-2d-layer2"  data-processing-sources="/js/user_modules/processingjs/processing.pde"  class="mycanvas" width="1728" height="972"></canvas>
+    <!---<canvas id="canvas-2d" class="mycanvas" width="1728" height="972"></canvas>
+    -->
+</div>
+
 <div id="comment-post">
     <input id="submit-input" type="text" class="form-control" maxlength="100" placeholder="chat">
     <button class="btn btn-dark" id="submit-btn">GO</button>
 </div>
 
+<script src="/js/user_modules/processingjs/processing.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js" type="module"></script>
 </body>

@@ -30,10 +30,6 @@ const context = canvas.getContext('2d');
 //playerImage.src = '/error.jpg';
 let movement = {};
 
-const colors = [
-    '#ff8e8e','#ff82c6','#c68eff','#9393ff','#93c9ff','#8effff','#8effc6','#c6ff8e','#ffff8e'
-];
-
 function gameStart() {
     socket.emit('game-start');
 }
@@ -65,22 +61,20 @@ socket.on('state',function(players) {
 
     let i=0;
     Object.values(players).forEach(function(player) {
-        if (i > colors.length) i = 0;
-        i++;
-
         let shape = new createjs.Shape();
-        shape.graphics.beginFill(colors[i]);
+        shape.graphics.beginFill(player.color);
         shape.graphics.drawCircle(0,0,60);
         shape.x = player.x;
         shape.y = player.y;
+        shape.alpha = 0.6;
         stage.addChild(shape);
-        stage.update();
 
-        context.lineWidth = 2;
-        context.fillStyle = "0ff";
-        context.font = '30px sans-serif';
-        context.fillText(player.comment, player.x + 80, player.y - 20);
-        
+        let text = new createjs.Text(player.comment,'30px sans-serif','#000');
+        text.x = player.x + 80;
+        text.y = player.y - 60;
+        stage.addChild(text);
+
+        stage.update();
     });
 });
 

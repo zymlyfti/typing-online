@@ -1,69 +1,28 @@
-class Indicies{
- int x,y;
- Indicies(int x,int y){
-  this.x=x;
-  this.y=y;
- }
-}
-
-class Circle{
-  float x,y,r,size,dir,nowx,nowy;
-  Circle(float x,float y,float r,float size,float dir){
-   this.x=x;
-   this.y=y;
-   this.r=r;
-   this.dir=dir;
-   this.size=size;
-  }
-  
-  void update(){
-    pushMatrix();
-    translate(x,y);
-    float rad=dir*radians(frameCount);
-    float elx=size*cos(rad);
-    float ely=size*sin(rad);
-    ellipse(elx,ely,r,r);
-    nowx=x+elx;
-    nowy=y+ely;
-    popMatrix();
-  }
-};
-
-Circle c[][]=new Circle[4][4];
+float boff;
 
 void setup(){
-  size(864,486);
-  noFill();
-  stroke(255);
-  for(int i=0;i<4;i++){
-     c[0][i]=new Circle(180*cos(radians(360.0/4*i)),180*sin(radians(360.0/4*i)),20,50,1); 
-     c[1][i]=new Circle(150*cos(radians(360.0/4*i)),150*sin(radians(360.0/4*i)),20,50,-1);
-     c[2][i]=new Circle(120*cos(radians(360.0/4*i)),120*sin(radians(360.0/4*i)),20,50,1);
-     c[3][i]=new Circle(90*cos(radians(360.0/4*i)),90*sin(radians(360.0/4*i)),20,50,-1);
-  }
+  size(1728,972,P3D);
+  
+  perspective(1, float(width)/float(height), 1.0, 60000.0);
 }
 
 void draw(){
-  background(0);
-  translate(mouseX,mouseY);
-  for(int i=0;i<4;i++){
-   c[0][i].update();
-   c[1][i].update();
-   c[2][i].update();
-   c[3][i].update();
-  }
-  
-  for(int i=0;i<4;i++){
-   for(int j=0;j<4;j++){
-    for(int p=0;p<4;p++){
-     for(int q=0;q<4;q++){
-       if(i==p && j==q)continue;
-       if((c[i][j].nowx-c[p][q].nowx)*(c[i][j].nowx-c[p][q].nowx)+(c[i][j].nowy-c[p][q].nowy)*(c[i][j].nowy-c[p][q].nowy)<16000){
-        line(c[i][j].nowx,c[i][j].nowy,c[p][q].nowx,c[p][q].nowy); 
-       }
-     }
+  boff += 0.01;
+  background(255);
+  float off = boff;
+  for(int range = 0; range < width; range+= 10){
+    off += 0.01;
+    noFill();
+    stroke(map(range, 0, width, 0, 255));
+    //ellipse(width/2, height/2, width, width);
+    beginShape();
+    curveVertex(cos(radians(-10))*width+width/2+noise(-10/10, off)*1000, sin(radians(-10))*width+height/2+noise(-10/10, off)*1000);
+    for(int angle = 0; angle<360; angle+=10){
+      curveVertex(cos(radians(angle))*width+width/2+noise(angle/10, off)*1000, sin(radians(angle))*width+height/2+noise(angle/1000, off)*1000);
     }
-   }
+    curveVertex(cos(radians(360))*width+width/2+noise(0, off)*1000, sin(radians(360))*width+height/2+noise(0, off)*1000);
+    curveVertex(cos(radians(370))*width+width/2+noise(10/10, off)*1000, sin(radians(370))*width+height/2+noise(10/10, off)*1000);
+      endShape();
+    translate(map(noise(off+10), 0, 1, -50, 50), map(noise(off), 0, 1, -50, 50), -100);
   }
-  
 }

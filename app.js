@@ -48,6 +48,8 @@ class Player {
 let players = {};
 
 io.on('connection',function(socket) {
+    console.log('user connected');
+
     let player = null;
     
     socket.on('game-start',function(config) {
@@ -65,6 +67,8 @@ io.on('connection',function(socket) {
     });
 
     socket.on('disconnect',function() {
+        console.log('user disconnected');
+
         if (!player) {
             return;
         }
@@ -104,17 +108,6 @@ app.get('/',(req,res)=>{
 
     const txt = 'test';
     res.render('index',{sdata1:txt});
-});
-
-//クライアントでio()の実行、すなわちsocket.ioサーバーに接続された場合に発火
-io.on('connection',(socket)=>{
-    console.log('user connected');
-
-
-    //接続が終了されたら
-    socket.on('disconnect', function(data) {
-        console.log('user disconnected');
-    });
 });
 
 http.listen(port,function() {

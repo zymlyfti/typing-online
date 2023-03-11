@@ -25,6 +25,7 @@ class Player {
         this.y = Math.random() * (FIELD_HEIGHT - this.height);
         this.angle = 0;
         this.movement = {};
+        this.comment = "";
     }
 
     move(key) {
@@ -72,6 +73,13 @@ io.on('connection',function(socket) {
         player = null;
     });
 
+    socket.on('comment',function(comment1) {
+        if (!player) {
+            return;
+        }
+        player.comment = comment1;
+    });
+
 });  //io.on
 
 setInterval(function() {
@@ -92,7 +100,11 @@ setInterval(function() {
         }
     });
     io.sockets.emit('state',players);
+
+    //1000[ms] = 1[s]
+    //1[s]に33回通信(30FPS)
 },1000/30);
+
 
 
 //ルーティング-------------------------

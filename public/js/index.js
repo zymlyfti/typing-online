@@ -20,6 +20,9 @@ hiragana-parserクラス
 -------------------------------------
 */
 
+//全てのDOMの読み込みが終わってから処理を開始
+$(document).ready(function() {
+
 const socket = io();
 const canvas = $('#canvas-2d')[0];
 const context = canvas.getContext('2d');
@@ -56,17 +59,35 @@ socket.on('state',function(players) {
 
     Object.values(players).forEach(function(player) {
         context.drawImage(playerImage,player.x,player.y,140,140);
+
+        context.lineWidth = 2;
+        context.fillStyle = "0ff";
         context.font = '30px sans-serif';
-        context.fillText(player.id, player.x, player.y - 10);
+        context.fillText(player.comment, player.x + 80, player.y - 20);
+        
     });
 });
 
 socket.on('connect',gameStart);
 
+$('#submit-input').on('keypress',function(e) {
+    if (e.which == 13) {
+        submitProcess();
+    }
+});
 
+$('#submit-btn').on('click',function() {
+    submitProcess();
+});
 
-//全てのDOMの読み込みが終わってから処理を開始
-$(document).ready(function() {
+function submitProcess() {
+    let comment1 = $('#submit-input').val();
+    if (comment1) {
+        $('#submit-input').val('');
+        socket.emit('comment',comment1);
+    }
+}
+
 
 });
 

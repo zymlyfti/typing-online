@@ -112,7 +112,7 @@ setInterval(function() {
     });
     
     //M
-    //io.sockets.emit('state',players);
+    io.sockets.emit('state',players);
 
     //1000[ms] = 1[s]
     //1[s]に33回通信(30FPS)
@@ -131,6 +131,24 @@ app.get('/',(req,res)=>{
     res.render('index',{sdata1:txt});
 });
 
+<<<<<<< HEAD
+=======
+app.get('/room',(req,res)=>{
+    res.render('room');
+});
+
+//クライアントでio()の実行、すなわちsocket.ioサーバーに接続された場合に発火
+io.on('connection',(socket)=>{
+    console.log('user connected');
+
+
+    //接続が終了されたら
+    socket.on('disconnect', function(data) {
+        console.log('user disconnected');
+    });
+});
+
+>>>>>>> 8c40642a2dc70294cabbd164c7f4542608a25457
 http.listen(port,function() {
     console.log('listening on 3000');
 });

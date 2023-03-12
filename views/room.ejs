@@ -2,9 +2,10 @@
 <html lang="ja">
 <head>
         <%- include('./layouts/header.ejs',{title_content:'Index'}); %>
-        <link rel="stylesheet" type="text/css" href="/css/index.css?ver=<%= new Date().getTime().toString() %>">
+        <link rel="stylesheet" type="text/css" href="/css/room.css?ver=<%= new Date().getTime().toString() %>">
 </head>
 <body>
+
 
 <div id="canvas-wrap">
     <canvas id="canvas-2d-layer2"  data-processing-sources="/js/user_modules/processingjs/processing.pde"  class="mycanvas" width="1728" height="972"></canvas>
@@ -17,6 +18,6 @@
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js" type="module"></script>
+<script src="/js/room.js" type="module"></script>
 </body>
 </html>

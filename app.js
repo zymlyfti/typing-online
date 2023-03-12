@@ -131,8 +131,6 @@ app.get('/',(req,res)=>{
     res.render('index',{sdata1:txt});
 });
 
-<<<<<<< HEAD
-=======
 app.get('/room',(req,res)=>{
     res.render('room');
 });
@@ -148,7 +146,6 @@ io.on('connection',(socket)=>{
     });
 });
 
->>>>>>> 8c40642a2dc70294cabbd164c7f4542608a25457
 http.listen(port,function() {
     console.log('listening on 3000');
 });

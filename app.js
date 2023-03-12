@@ -108,7 +108,7 @@ setInterval(function() {
     });
     
     //M
-    //io.sockets.emit('state',players);
+    io.sockets.emit('state',players);
 
     //1000[ms] = 1[s]
     //1[s]に33回通信(30FPS)
@@ -125,6 +125,10 @@ app.get('/',(req,res)=>{
 
     const txt = 'test';
     res.render('index',{sdata1:txt});
+});
+
+app.get('/room',(req,res)=>{
+    res.render('room');
 });
 
 //クライアントでio()の実行、すなわちsocket.ioサーバーに接続された場合に発火
